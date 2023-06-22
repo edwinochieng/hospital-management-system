@@ -15,7 +15,7 @@ export default function Home() {
           </Link>
         </div>
         <div className='bg-gray-100 rounded-lg w-[200px] h-[250px] cursor-pointer p-2'>
-          <Link href='auth/doctors'>
+          <Link href='auth/doctor'>
             <Image src={doctor} alt='doctor' />
             <div className='text-center text-lg my-1'>Doctor</div>
           </Link>
