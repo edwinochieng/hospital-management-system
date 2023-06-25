@@ -12,7 +12,7 @@
     "@auth/prisma-adapter": "^1.0.0",
     "@prisma/client": "^4.16.1",
     "autoprefixer": "10.4.14",
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^5.1.0",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.6",
     "mongodb": "^5.6.0",
