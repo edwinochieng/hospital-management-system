@@ -3,12 +3,75 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Admin {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  username String @unique
+  id       String    @id @default(cuid())
+  username String    @unique
   password String
+  accounts Account[]
+  sessions Session[]
+}
+
+model Doctor {
+  id             String    @id @default(cuid())
+  doctorId       String    @unique
+  name           String
+  email          String    @unique
+  specialization String
+  accounts       Account[]
+  sessions       Session[]
+}
+
+model Staff {
+  id       String    @id @default(cuid())
+  staffId  String    @unique
+  name     String
+  email    String    @unique
+  role     String
+  accounts Account[]
+  sessions Session[]
+}
+
+//next-auth
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  admin  Admin?  @relation(fields: [userId], references: [id], onDelete: Cascade, map: "admin_sessions")
+  doctor Doctor? @relation(fields: [userId], references: [id], onDelete: Cascade, map: "doctor_sessions")
+  staff  Staff?  @relation(fields: [userId], references: [id], onDelete: Cascade, map: "staff_sessions")
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  admin  Admin?  @relation(fields: [userId], references: [id], onDelete: Cascade, map: "admin_sessions")
+  doctor Doctor? @relation(fields: [userId], references: [id], onDelete: Cascade, map: "doctor_sessions")
+  staff  Staff?  @relation(fields: [userId], references: [id], onDelete: Cascade, map: "staff_sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
