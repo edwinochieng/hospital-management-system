@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { getError } from "../../../../../utils/error";
+import { toast } from "react-hot-toast";
 
 export default function AddDoctor() {
   const {
@@ -9,7 +11,17 @@ export default function AddDoctor() {
     formState: { errors },
   } = useForm();
 
-  const submitHandler = () => {};
+  const submitHandler = async ({ name, email, specialization }) => {
+    try {
+      await axios.post("/api/admin/registerDoctor", {
+        name,
+        email,
+        specialization,
+      });
+    } catch (err) {
+      toast.error(getError(err));
+    }
+  };
   return (
     <div className='max-w-[700px] mx-auto'>
       <form
@@ -69,7 +81,7 @@ export default function AddDoctor() {
         </div>
 
         <div>
-          <label htmlFor='password' className='text-sm font-medium'>
+          <label htmlFor='specialization' className='text-sm font-medium'>
             Specialization
           </label>
 
