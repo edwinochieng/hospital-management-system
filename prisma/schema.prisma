@@ -21,6 +21,7 @@ model Doctor {
   name           String
   email          String    @unique
   specialization String
+  password       String
   accounts       Account[]
   sessions       Session[]
 }
@@ -31,6 +32,7 @@ model Staff {
   name     String
   email    String    @unique
   role     String
+  password String
   accounts Account[]
   sessions Session[]
 }
