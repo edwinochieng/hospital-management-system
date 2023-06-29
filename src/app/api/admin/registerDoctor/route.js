@@ -1,26 +1,28 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import sendRegistrationEmail from "../../../../../utils/notifications/registrationEmail";
+import prisma from "../../../../../prisma/client";
 
 const saltRounds = 10;
 
-export async function POST() {
+export async function POST(req) {
+  const { name, email, specialization } = await req.json();
+  console.log(name, email, specialization);
+
+  if (!name || !email || !email.includes("@") || !specialization) {
+    return NextResponse.json({
+      message: "Validation Error",
+    });
+    return;
+  }
+
   try {
-    const { name, email, specialization } = req.body;
-
-    if (!name || !email || !email.includes("@") || !specialization) {
-      NextResponse.status(422).send({
-        message: "Validation Error",
-      });
-      return;
-    }
-
     const existingDoctor = await prisma.doctor.findUnique({
       where: { email: email },
     });
 
     if (existingDoctor) {
-      res.status(422).send({
+      return NextResponse.json({
         message: "User already exists",
       });
       return;
@@ -28,10 +30,10 @@ export async function POST() {
 
     const latestRegistrationNumber = await prisma.doctor.findFirst({
       orderBy: {
-        registrationNumber: "desc",
+        doctorId: "desc",
       },
       select: {
-        registrationNumber: true,
+        doctorId: true,
       },
     });
 
@@ -62,7 +64,7 @@ export async function POST() {
       },
     });
 
-    await sendRegistrationEmail({
+    sendRegistrationEmail({
       name,
       email,
       username: newDoctor.doctorId,
@@ -73,6 +75,6 @@ export async function POST() {
       message: "Doctor registered successfully",
     });
   } catch (err) {
-    NextResponse.status(500).send({ message: "Server error" });
+    return NextResponse.json({ message: "Server error" });
   }
 }
