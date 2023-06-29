@@ -3,6 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { getError } from "../../../../../utils/error";
 import { toast } from "react-hot-toast";
+import axios from "axios";
 
 export default function AddDoctor() {
   const {
@@ -90,6 +91,7 @@ export default function AddDoctor() {
               {...register("specialization", {
                 required: "Please enter specialization",
               })}
+              type='text'
               id='specialization'
               className='w-full rounded-lg border border-gray-200 p-3 sm:p-4 pr-12 text-sm focus:outline-indigo-500'
               placeholder='Enter specialization'
