@@ -24,8 +24,8 @@ const handler = NextAuth({
         const doctor = await prisma.doctor.findUnique({
           where: { doctorId: username },
         });
-        const staff = await prisma.staff.findUnique({
-          where: { staffId: username },
+        const receptionist = await prisma.receptionist.findUnique({
+          where: { username: username },
         });
 
         if (admin && bcrypt.compareSync(password, admin.password)) {
@@ -42,12 +42,15 @@ const handler = NextAuth({
             email: doctor.email,
           };
         }
-        if (staff && bcrypt.compareSync(password, staff.password)) {
+        if (
+          receptionist &&
+          bcrypt.compareSync(password, receptionist.password)
+        ) {
           return {
-            id: staff.id,
-            name: staff.name,
-            username: staff.Id,
-            email: staff.email,
+            id: receptionist.id,
+            name: receptionist.name,
+            username: receptionist.Id,
+            email: receptionist.email,
           };
         }
         throw new Error("Invalid username or password");
