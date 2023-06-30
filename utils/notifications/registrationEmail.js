@@ -1,19 +1,19 @@
 import nodemailer from "nodemailer";
 
 async function sendRegistrationEmail(name, email, username, password) {
-  // Create a Nodemailer transporter with your email service credentials
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp-relay.sendinblue.com",
+    port: 587,
     auth: {
-      user: process.env.MY_EMAIL,
-      pass: process.env.EMAIL_PASSWORD,
+      user: process.env.USERNAME,
+      pass: process.env.PASSWORD,
     },
+    authMethod: "PLAIN",
   });
 
-  // Compose the email
   const mailOptions = {
     from: "HospitalManagementSystem@example.com",
-    to: email,
+    to: process.env.TEST_EMAIL,
     subject: "Registration Details",
     text: `Dear ${name}, you have been successfully registered. Your Username/Reg.No is ${username} and Password is ${password}. Use them to access your portal. `,
   };
