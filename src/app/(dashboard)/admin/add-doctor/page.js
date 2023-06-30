@@ -22,6 +22,8 @@ export default function AddDoctor() {
     } catch (err) {
       toast.error(getError(err));
     }
+
+    toast.success("Doctor registered successfully");
   };
   return (
     <div className='max-w-[700px] mx-auto'>
