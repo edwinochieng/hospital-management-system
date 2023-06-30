@@ -1,6 +1,9 @@
 "use client";
+import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { getError } from "../../../../../utils/error";
 
 export default function AddStaff() {
   const {
@@ -9,7 +12,18 @@ export default function AddStaff() {
     formState: { errors },
   } = useForm();
 
-  const submitHandler = () => {};
+  const submitHandler = async ({ name, email, role }) => {
+    try {
+      await axios.post("/api/admin/registerStaff", {
+        name,
+        email,
+        role,
+      });
+      toast.success(`${role} registered successfully`);
+    } catch (err) {
+      toast.error(getError(err));
+    }
+  };
   return (
     <div className='max-w-[700px] mx-auto'>
       <form
