@@ -13,7 +13,7 @@ export default function StaffLogin() {
   return (
     <div className='max-w-[700px] mx-auto'>
       <form className='bg-white space-y-4 rounded-xl py-8 px-8 shadow-2xl'>
-        <p className='text-lg font-medium'>Staff Login</p>
+        <p className='text-lg font-medium'>Receptionist Login</p>
 
         <div>
           <label htmlFor='email' className='text-sm font-medium'>

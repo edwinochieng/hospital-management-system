@@ -21,9 +21,9 @@ export default function Home() {
           </Link>
         </div>
         <div className='bg-gray-100 rounded-lg w-[200px] h-[250px] cursor-pointer p-2'>
-          <Link href='auth/staff'>
+          <Link href='auth/receptionist'>
             <Image src={staff} alt='staff' />
-            <div className='text-center text-lg my-1'>Staff</div>
+            <div className='text-center text-lg my-1'>Receptionist</div>
           </Link>
         </div>
       </div>
