@@ -2,17 +2,43 @@
 
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { getError } from "../../../../../utils/error";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function StaffLogin() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const submitHandler = async ({ username, password }) => {
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        username,
+        password,
+      });
+      if (result.error) {
+        toast.error(result.error);
+      } else {
+        router.push("/receptionist");
+        toast.success("Logged in");
+      }
+    } catch (err) {
+      toast.error(getError(err));
+    }
+  };
+
   return (
     <div className='max-w-[700px] mx-auto'>
-      <form className='bg-white space-y-4 rounded-xl py-8 px-8 shadow-2xl'>
+      <form
+        className='bg-white space-y-4 rounded-xl py-8 px-8 shadow-2xl'
+        onSubmit={handleSubmit(submitHandler)}
+      >
         <p className='text-lg font-medium'>Receptionist Login</p>
 
         <div>
