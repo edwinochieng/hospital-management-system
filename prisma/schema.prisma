@@ -37,7 +37,7 @@ model Receptionist {
 model Patient {
   id         String  @id @default(cuid())
   name       String
-  email      String
+  email      String  @unique
   age        String
   gender     String
   isAdmitted Boolean @default(false)
