@@ -1,14 +1,22 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { getError } from "../../../../../utils/error";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function StaffLogin() {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session?.user.role === "receptionist") {
+      router.push("/receptionist");
+      toast.success("Logged In successfuly");
+    }
+  }, [router, session]);
   const {
     register,
     handleSubmit,
@@ -24,9 +32,6 @@ export default function StaffLogin() {
       });
       if (result.error) {
         toast.error(result.error);
-      } else {
-        router.push("/receptionist");
-        toast.success("Logged in");
       }
     } catch (err) {
       toast.error(getError(err));

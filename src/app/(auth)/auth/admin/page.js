@@ -1,7 +1,7 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import React from "react";
+import { signIn, useSession } from "next-auth/react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { getError } from "../../../../../utils/error";
@@ -9,6 +9,14 @@ import { useRouter } from "next/navigation";
 
 export default function AdminLogin() {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session?.user.role === "admin") {
+      router.push("/admin");
+      toast.success("Logged In successfuly");
+    }
+  }, [router, session]);
 
   const {
     register,
@@ -25,9 +33,6 @@ export default function AdminLogin() {
       });
       if (result.error) {
         toast.error(result.error);
-      } else {
-        router.push("/admin");
-        toast.success("Logged in");
       }
     } catch (err) {
       toast.error(getError(err));

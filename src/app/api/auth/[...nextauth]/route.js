@@ -31,29 +31,29 @@ const handler = NextAuth({
         if (admin && bcrypt.compareSync(password, admin.password)) {
           return {
             id: admin.id,
-            usename: admin.username,
+            username: admin.username,
+            role: "admin",
           };
-        }
-        if (doctor && bcrypt.compareSync(password, doctor.password)) {
+        } else if (doctor && bcrypt.compareSync(password, doctor.password)) {
           return {
             id: doctor.id,
             name: doctor.name,
             username: doctor.doctorId,
             email: doctor.email,
+            role: "doctor",
           };
-        }
-        if (
+        } else if (
           receptionist &&
           bcrypt.compareSync(password, receptionist.password)
         ) {
           return {
             id: receptionist.id,
-            name: receptionist.name,
-            username: receptionist.Id,
-            email: receptionist.email,
+            username: receptionist.username,
+            role: "receptionist",
           };
+        } else {
+          throw new Error("Invalid username or password");
         }
-        throw new Error("Invalid username or password");
       },
     }),
   ],
@@ -62,11 +62,17 @@ const handler = NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.id = user.id;
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
       return token;
     },
     async session({ session, token }) {
-      if (token) session.user.id = token.id;
+      if (token) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+      }
       return session;
     },
   },

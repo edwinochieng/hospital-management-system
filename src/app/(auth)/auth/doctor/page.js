@@ -5,10 +5,18 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { getError } from "../../../../../utils/error";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function DoctorLogin() {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session?.user.role === "doctor") {
+      router.push("/doctor");
+      toast.success("Logged In successfuly");
+    }
+  }, [router, session]);
 
   const {
     register,
@@ -25,9 +33,6 @@ export default function DoctorLogin() {
       });
       if (result.error) {
         toast.error(result.error);
-      } else {
-        router.push("/doctor");
-        toast.success("Logged in");
       }
     } catch (err) {
       toast.error(getError(err));
