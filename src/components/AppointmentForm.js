@@ -1,15 +1,30 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { getError } from "../../utils/error";
+import axios from "axios";
 
 export default function AppointmentForm({ doctors }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
-    watch,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const submitHandler = async ({ date, time, doctor }) => {
+    try {
+      await axios.post("/api/receptionist/bookAppointment", {
+        date,
+        time,
+        doctor,
+      });
+      toast.success("Appointment booked");
+    } catch (err) {
+      toast.error(getError(err));
+    }
+  };
 
   return (
     <div>
@@ -23,7 +38,7 @@ export default function AppointmentForm({ doctors }) {
         <div className='fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-500 bg-opacity-50'>
           <div className='w-[700px] '>
             <form
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit(submitHandler)}
               className='bg-white  mb-0 space-y-4 rounded-xl py-8 px-3 sm:px-8 shadow-2xl'
             >
               <p className='text-lg font-medium'>Book Appointment</p>
