@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import prisma from "../../../../../prisma/client";
 
 export async function POST(req) {
-  const { date, time, doctor } = await req.json();
+  const { date, time, doctor, patientId } = await req.json();
 
-  if (!date || !time || !doctor) {
+  if (!date || !time || !doctor || !patientId) {
     return NextResponse.json({
       message: "Validation Error",
     });
@@ -34,6 +34,11 @@ export async function POST(req) {
         doctor: {
           connect: {
             id: doctor,
+          },
+        },
+        patient: {
+          connect: {
+            id: patientId,
           },
         },
       },

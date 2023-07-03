@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { getError } from "../../utils/error";
 import axios from "axios";
 
-export default function AppointmentForm({ doctors }) {
+export default function AppointmentForm({ doctors, patientId }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -19,6 +19,7 @@ export default function AppointmentForm({ doctors }) {
         date,
         time,
         doctor,
+        patientId,
       });
       toast.success("Appointment booked");
     } catch (err) {
