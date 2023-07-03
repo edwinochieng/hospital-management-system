@@ -12,12 +12,11 @@ export default function AddDoctor() {
     formState: { errors },
   } = useForm();
 
-  const submitHandler = async ({ name, email, specialization }) => {
+  const submitHandler = async ({ name, email }) => {
     try {
       await axios.post("/api/admin/registerDoctor", {
         name,
         email,
-        specialization,
       });
     } catch (err) {
       toast.error(getError(err));
@@ -78,29 +77,6 @@ export default function AddDoctor() {
             {errors.email && (
               <span className='text-red-500 pt-1 text-sm'>
                 {errors.email.message}
-              </span>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor='specialization' className='text-sm font-medium'>
-            Specialization
-          </label>
-
-          <div className='relative mt-1'>
-            <input
-              {...register("specialization", {
-                required: "Please enter specialization",
-              })}
-              type='text'
-              id='specialization'
-              className='w-full rounded-lg border border-gray-200 p-3 sm:p-4 pr-12 text-sm focus:outline-indigo-500'
-              placeholder='Enter specialization'
-            />
-            {errors.specialization && (
-              <span className='text-red-500 pt-1'>
-                {errors.specialization.message}
               </span>
             )}
           </div>

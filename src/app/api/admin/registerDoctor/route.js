@@ -6,10 +6,10 @@ import prisma from "../../../../../prisma/client";
 const saltRounds = 10;
 
 export async function POST(req) {
-  const { name, email, specialization } = await req.json();
-  console.log(name, email, specialization);
+  const { name, email } = await req.json();
+  console.log(name, email);
 
-  if (!name || !email || !email.includes("@") || !specialization) {
+  if (!name || !email || !email.includes("@")) {
     return NextResponse.json({
       message: "Validation Error",
     });
@@ -59,7 +59,7 @@ export async function POST(req) {
         doctorId: formattedRegistrationNumber,
         name,
         email,
-        specialization,
+
         password: bcrypt.hashSync(password, saltRounds),
       },
     });
