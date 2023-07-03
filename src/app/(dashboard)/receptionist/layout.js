@@ -2,7 +2,7 @@ import SideBar from "@/components/SideBar";
 
 const sidebarItems = [
   { title: "Patient Registration", link: "/receptionist" },
-  { title: "Search Patient", link: "/receptionist/patients" },
+  { title: "Book Appointment", link: "/receptionist/patients" },
 ];
 
 export default function ReceptionistLayout({ children }) {
