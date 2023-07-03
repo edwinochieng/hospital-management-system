@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import AppointmentForm from "./AppointmentForm";
 
-export default function SearchPatients({ results }) {
+export default function SearchPatients({ results, doctors }) {
   const [patients, setPatients] = useState([]);
 
   const {
@@ -77,7 +77,7 @@ export default function SearchPatients({ results }) {
                   <p>Email: {patient.email}</p>
                 </div>
 
-                <AppointmentForm />
+                <AppointmentForm doctors={doctors} />
               </div>
             ))}
           </div>
