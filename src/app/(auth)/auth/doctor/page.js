@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { getError } from "../../../../../utils/error";
@@ -55,10 +55,10 @@ export default function DoctorLogin() {
           <div className='relative mt-1'>
             <input
               {...register("username", {
-                required: "Please enter username",
+                required: "Please enter your email",
               })}
               className='w-full rounded-lg border border-gray-200 p-4 pr-12 text-sm focus:outline-indigo-500'
-              placeholder='Enter Employee No.'
+              placeholder='Enter email.'
             />
             {errors.username && (
               <span className='text-red-500 pt-1 text-sm'>

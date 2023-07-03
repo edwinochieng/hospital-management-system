@@ -22,7 +22,7 @@ const handler = NextAuth({
         });
 
         const doctor = await prisma.doctor.findUnique({
-          where: { doctorId: username },
+          where: { email: username },
         });
         const receptionist = await prisma.receptionist.findUnique({
           where: { username: username },
