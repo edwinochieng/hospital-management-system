@@ -77,7 +77,7 @@ export default function SearchPatients({ results, doctors }) {
                   <p>Email: {patient.email}</p>
                 </div>
 
-                <AppointmentForm doctors={doctors} />
+                <AppointmentForm doctors={doctors} patientId={patient.id} />
               </div>
             ))}
           </div>
