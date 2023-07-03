@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import sendRegistrationEmail from "../../../../../utils/notifications/registrationEmail";
 import prisma from "../../../../../prisma/client";
 
 const saltRounds = 10;
@@ -23,7 +22,7 @@ export async function POST(req) {
 
     if (existingDoctor) {
       return NextResponse.json({
-        message: "User already exists",
+        message: "Doctor already exists",
       });
       return;
     }
@@ -57,16 +56,8 @@ export async function POST(req) {
         doctorId: formattedRegistrationNumber,
         name,
         email,
-
-        password: bcrypt.hashSync(password, saltRounds),
+        password: bcrypt.hashSync("123456", saltRounds),
       },
-    });
-
-    sendRegistrationEmail({
-      name,
-      email,
-      username: newDoctor.doctorId,
-      password,
     });
 
     return NextResponse.json({
