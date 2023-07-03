@@ -37,17 +37,15 @@ export async function POST(req) {
       },
     });
 
-    // Calculate the next registration number
     let nextRegistrationNumber = 1;
     if (latestRegistrationNumber) {
       const latestNumber = parseInt(
-        latestRegistrationNumber.registrationNumber.substring(3),
+        latestRegistrationNumber.doctorId.substring(3),
         10
       );
       nextRegistrationNumber = latestNumber + 1;
     }
 
-    // Format the registration number with leading zeros
     const formattedRegistrationNumber = `DR-${nextRegistrationNumber
       .toString()
       .padStart(3, "0")}`;
