@@ -22,6 +22,7 @@ export default function AppointmentForm({ doctors, patientId }) {
         patientId,
       });
       toast.success("Appointment booked");
+      setIsOpen(false);
     } catch (err) {
       toast.error(getError(err));
     }
