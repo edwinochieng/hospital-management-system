@@ -57,7 +57,7 @@ export default function StaffLogin() {
                 required: "Please enter username",
               })}
               className='w-full rounded-lg border border-gray-200 p-4 pr-12 text-sm focus:outline-indigo-500'
-              placeholder='Enter Staff No.'
+              placeholder='Enter username.'
             />
             {errors.username && (
               <span className='text-red-500 pt-1 text-sm'>
