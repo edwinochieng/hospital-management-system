@@ -6,6 +6,7 @@ import AppointmentForm from "./AppointmentForm";
 
 export default function SearchPatients({ results, doctors }) {
   const [patients, setPatients] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const {
     register,
@@ -21,6 +22,7 @@ export default function SearchPatients({ results, doctors }) {
     );
 
     setPatients(filteredPatients);
+    setSearchTerm("");
   };
 
   return (
@@ -39,6 +41,8 @@ export default function SearchPatients({ results, doctors }) {
                 })}
                 type='text'
                 id='searchTerm'
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className='w-full rounded-lg border border-gray-200 p-4 pr-12 text-sm focus:outline-indigo-500'
                 placeholder='Search by name or email'
               />
@@ -61,27 +65,26 @@ export default function SearchPatients({ results, doctors }) {
         </form>
       </div>
       <div className='px-8 mt-10'>
-        {patients.length === 0 ? (
+        {searchTerm === "" && patients.length === 0 && (
           <div className='text-center text-lg font-semibold mt-10'>
             No Results found!
           </div>
-        ) : (
-          <div>
-            {patients.map((patient) => (
-              <div
-                key={patient.id}
-                className='flex flex-row justify-between items-center bg-white rounded-lg p-5 '
-              >
-                <div>
-                  <p>Name: {patient.name}</p>
-                  <p>Email: {patient.email}</p>
-                </div>
-
-                <AppointmentForm doctors={doctors} patientId={patient.id} />
-              </div>
-            ))}
-          </div>
         )}
+        <div>
+          {patients.map((patient) => (
+            <div
+              key={patient.id}
+              className='flex flex-row justify-between items-center bg-white rounded-lg p-5 '
+            >
+              <div>
+                <p>Name: {patient.name}</p>
+                <p>Email: {patient.email}</p>
+              </div>
+
+              <AppointmentForm doctors={doctors} patientId={patient.id} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
