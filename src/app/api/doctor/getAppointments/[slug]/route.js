@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../../../prisma/client";
 
-export async function GET({ params }) {
+export async function GET(res, { params }) {
   const email = params.slug;
 
   try {
