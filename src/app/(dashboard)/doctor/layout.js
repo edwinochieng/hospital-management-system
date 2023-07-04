@@ -3,7 +3,6 @@ import SideBar from "@/components/SideBar";
 const sidebarItems = [
   { title: "Overview", link: "/doctor" },
   { title: "Appointments", link: "/doctor/appointments" },
-  { title: "My Patients", link: "/doctor/patients" },
 ];
 
 export default function DoctorDashBoardLayout({ children }) {
