@@ -1,5 +1,22 @@
-## Prerequisites
+## Tech stack
 
-System requirements:
+- Next.js
+- JavaScript
+- Tailwind CSS
+- NextAuth
+- PostgreSQL
+- Prisma
+  
+## Features
 
-- Node.js 16.8 or later.
+- Register patients
+- Register doctors and staff
+- Book appointments
+- View appointments
+- View staff list
+- View patients list
+- Admin dashboard
+- Doctor dashboard
+- Receptionist dashboard
+- Authentication
+  
