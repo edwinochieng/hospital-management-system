@@ -33,26 +33,35 @@ export default async function Appointments() {
   };
   return (
     <div className='max-w-[1000px] mx-auto'>
-      <table className='w-full bg-white border border-gray-200 rounded shadow'>
-        <thead>
-          <tr className='bg-gray-100'>
-            <th className='px-4 py-2 font-semibold text-left'>Patient</th>
-            <th className='px-4 py-2 font-semibold text-left'>Email</th>
-            <th className='px-4 py-2 font-semibold text-left'>Date</th>
-            <th className='px-4 py-2 font-semibold text-left'>Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {appointments.map((appointment) => (
-            <tr key={appointment.id} className='border-b border-gray-200'>
-              <td className='px-4 py-2'>{appointment.patient.name}</td>
-              <td className='px-4 py-2'>{appointment.patient.email}</td>
-              <td className='px-4 py-2'>{formatDate(appointment.date)}</td>
-              <td className='px-4 py-2'>{formatTime(appointment.date)}</td>
+      {appointments.length == 0 ? (
+        <div className='flex justify-center items-center'>
+          <div className='text-gray-800 font-semibold text-2xl'>
+            {" "}
+            You have no appointments!
+          </div>
+        </div>
+      ) : (
+        <table className='w-full bg-white border border-gray-200 rounded shadow'>
+          <thead>
+            <tr className='bg-gray-100'>
+              <th className='px-4 py-2 font-semibold text-left'>Patient</th>
+              <th className='px-4 py-2 font-semibold text-left'>Email</th>
+              <th className='px-4 py-2 font-semibold text-left'>Date</th>
+              <th className='px-4 py-2 font-semibold text-left'>Time</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {appointments.map((appointment) => (
+              <tr key={appointment.id} className='border-b border-gray-200'>
+                <td className='px-4 py-2'>{appointment.patient.name}</td>
+                <td className='px-4 py-2'>{appointment.patient.email}</td>
+                <td className='px-4 py-2'>{formatDate(appointment.date)}</td>
+                <td className='px-4 py-2'>{formatTime(appointment.date)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
